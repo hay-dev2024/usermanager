@@ -19,29 +19,17 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MyUserManagerTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                AppNavigation(name = "Android")
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     MyUserManagerTheme {
-        Greeting("Android")
+        AppNavigation("Android")
     }
 }
