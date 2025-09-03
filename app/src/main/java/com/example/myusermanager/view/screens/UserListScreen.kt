@@ -75,7 +75,7 @@ fun UserListScreen(navController: NavController, viewModel: UserViewModel = view
                             fontSize = 16.sp
                         )
                         Text(
-                            text = "Name: ${user.name}",
+                            text = "이름: ${user.name}",
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp
                         )

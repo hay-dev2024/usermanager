@@ -37,6 +37,22 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun setUserName(name: String) {
+        _userName.value = name
+    }
+
+    fun setUserEmail(email: String) {
+        _userEmail.value = email
+    }
+
+    fun setUserPhone(phone: String) {
+        _userPhone.value = phone
+    }
+
+    fun setUserAddress(address: String) {
+        _userAddress.value = address
+    }
+
     fun addUser() {
         viewModelScope.launch {
             if (_userName.value.isNotBlank()) {
@@ -49,6 +65,7 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
                     createdAt = currentDate
                 )
                 userDao.insertUser(user)
+                loadUsers()
             }
         }
     }
