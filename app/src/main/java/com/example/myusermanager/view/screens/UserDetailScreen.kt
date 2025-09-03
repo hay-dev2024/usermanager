@@ -1,6 +1,7 @@
 package com.example.myusermanager.view.screens
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -15,8 +16,8 @@ import androidx.navigation.NavController
 import com.example.myusermanager.view.UserViewModel
 
 @Composable
-fun UserDetailScreen(navController: NavController, userId: Int) {
-    val viewModel: UserViewModel = viewModel()
+fun UserDetailScreen(navController: NavController, userId: Int, viewModel: UserViewModel) {
+//    val viewModel: UserViewModel = viewModel()
     val userList by viewModel.userList.collectAsState()
     val user = userList.find { it.id == userId }
 
@@ -36,12 +37,40 @@ fun UserDetailScreen(navController: NavController, userId: Int) {
             Text(text = "사용자 정보를 찾을 수 없습니다.")
         }
 
-        Button(
-            onClick = { navController.popBackStack() },
-            modifier = Modifier.padding(top = 16.dp)
-        ) {
-            Text(text = "뒤로가기")
+        Row {
+            Button(
+                onClick = { navController.popBackStack() },
+                modifier = Modifier.padding(top = 16.dp)
+            ) {
+                Text(text = "뒤로가기")
+            }
+
+            Button(
+                onClick = {
+                    if (user != null) {
+                        navController.navigate("UserEditScreen/${user.id}")
+                    }
+                },
+                modifier = Modifier.padding(top = 16.dp, start = 8.dp)
+            ) {
+                Text(text = "수정")
+            }
+
+            Button(
+                onClick = {
+                    if (user != null) {
+                        viewModel.deleteUser(user)
+                        navController.popBackStack()
+                    }
+                },
+                modifier = Modifier.padding(top = 16.dp, start = 8.dp)
+            ) {
+                Text(text = "삭제")
+            }
+
         }
+
+
 
     }
 

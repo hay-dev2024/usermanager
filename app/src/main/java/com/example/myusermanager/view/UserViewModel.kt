@@ -70,6 +70,13 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun updateUser(user: User) {
+        viewModelScope.launch {
+            userDao.updateUser(user)
+            loadUsers()
+        }
+    }
+
     fun deleteUser(user: User) {
         viewModelScope.launch {
             val existingUser = userDao.getAllUsers().find { it.id == user.id }
@@ -79,7 +86,5 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
             }
         }
     }
-
-
 
 }

@@ -57,6 +57,7 @@ dependencies {
     implementation("androidx.room:room-runtime:2.7.2")
     implementation(libs.ui)
     implementation(libs.androidx.navigation.common.ktx)
+    implementation(libs.androidx.runtime)
 //    implementation(libs.androidx.navigation.safe.args.generator)
     ksp("androidx.room:room-compiler:2.7.2")
     implementation("androidx.room:room-ktx:2.7.2")

@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserListScreen(navController: NavController, viewModel: UserViewModel = viewModel()) {
+fun UserListScreen(navController: NavController, viewModel: UserViewModel) {
     val userList by viewModel.userList.collectAsState()
 
     Scaffold(

@@ -11,6 +11,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -21,8 +22,27 @@ import androidx.navigation.NavController
 import com.example.myusermanager.view.UserViewModel
 
 @Composable
-fun UserEditScreen(navController: NavController) {
-    val viewModel: UserViewModel = viewModel()
+fun UserEditScreen(navController: NavController, userId: Int? = null, viewModel: UserViewModel) {
+//    val viewModel: UserViewModel = viewModel()
+    val userList by viewModel.userList.collectAsState()
+    val user = userList.find { it.id == userId }
+
+    LaunchedEffect(userId) {
+        if (userId == null) {
+            viewModel.setUserName("")
+            viewModel.setUserEmail("")
+            viewModel.setUserPhone("")
+            viewModel.setUserAddress("")
+        } else {
+            user?.let {
+                viewModel.setUserName(it.name)
+                viewModel.setUserEmail(it.email)
+                viewModel.setUserPhone(it.phone)
+                viewModel.setUserAddress(it.address)
+            }
+        }
+    }
+
     val userName by viewModel.userName.collectAsState()
     val userEmail by viewModel.userEmail.collectAsState()
     val userPhone by viewModel.userPhone.collectAsState()
@@ -34,9 +54,7 @@ fun UserEditScreen(navController: NavController) {
             .fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "사용자 정보 등록 및 수정"
-        )
+        Text(text = if (user != null) "사용자 정보 수정" else "사용자 정보 등록")
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -107,7 +125,18 @@ fun UserEditScreen(navController: NavController) {
         Row {
             Button(
                 onClick = {
-                    viewModel.addUser()
+                    if (user != null) {
+                        // 수정
+                        val updatedUser = user.copy(
+                            name = userName,
+                            email = userEmail,
+                            phone = userPhone,
+                            address = userAddress
+                        )
+                        viewModel.updateUser(updatedUser)
+                    } else {
+                        viewModel.addUser()
+                    }
                     navController.popBackStack()
                 }
             ) {
