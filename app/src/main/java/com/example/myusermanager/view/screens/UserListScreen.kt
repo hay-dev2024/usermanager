@@ -1,5 +1,6 @@
 package com.example.myusermanager.view.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -72,12 +73,20 @@ fun UserListScreen(navController: NavController, viewModel: UserViewModel = view
                     ) {
                         Text(
                             text = "ID: ${user.id}",
-                            fontSize = 16.sp
+                            fontSize = 16.sp,
+                            modifier = Modifier
+                                .clickable {
+                                navController.navigate("UserDetailScreen/${user.id}")
+                            }
                         )
                         Text(
                             text = "이름: ${user.name}",
                             fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp
+                            fontSize = 18.sp,
+                            modifier = Modifier
+                                .clickable {
+                                    navController.navigate("UserDetailScreen/${user.id}")
+                                }
                         )
                     }
                 }
